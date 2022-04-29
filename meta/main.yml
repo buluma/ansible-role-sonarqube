@@ -1,5 +1,6 @@
 galaxy_info:
-  author: lrk
+  author: Michael Buluma
+  namespace: buluma
   role_name: sonarqube
   description: "An Ansible Role that install SonarQube."
   license: "Apache License Version 2.0"
@@ -12,14 +13,15 @@ galaxy_info:
         - 7
     - name: Ubuntu
       versions:
-        - Bionic
-        - Xenial
+        - all
     - name: Debian
       versions:
-        - Stretch
+        - all
 
   galaxy_tags:
     - 'centos'
     - 'development'
     - 'monitoring'
     - 'sonarqube'
+
+dependencies: []

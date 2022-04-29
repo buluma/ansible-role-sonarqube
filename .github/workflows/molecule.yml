@@ -1,31 +1,64 @@
 ---
-name: Molecule
-on:  
-  push:
-  pull_request:
-    branches:
-      - master
+#
+# Ansible managed
+#
+
+name: Ansible Molecule
+
+on:
+  # Schedule updates (once daily)
+  schedule:
+    - cron: '37 19 * * *'
+  workflow_dispatch:
+  push: {branches: ["master", "main", "testing"]}
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
 jobs:
-  molecule:
-    runs-on: ubuntu-latest
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          path: "${{ github.repository }}"
+      - name: molecule
+        uses: buluma/molecule-action@v4.0.6
+        with:
+          command: lint
+  test:
+    needs:
+      - lint
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
-      max-parallel: 4
       matrix:
-        distro:
-          - centos7
-          - debian9
+        config:
+          - image: "enterpriselinux"
+            tag: "7"
+          - image: "docker-ubuntu-systemd"
+            tag: "latest"
+          - image: "docker-ubuntu-systemd"
+            tag: "bionic"
+          - image: "docker-ubuntu-systemd"
+            tag: "focal"
+          - image: "debian-systemd"
+            tag: "latest"
+          - image: "debian-systemd"
+            tag: "bookworm"
     steps:
-      - uses: actions/checkout@v2
-      - name: python
-        uses: actions/setup-python@v2
+      - name: checkout
+        uses: actions/checkout@v3
         with:
-          python-version: '3.8'
-      - name: dependencies
-        run: pip3 install yamllint ansible ansible-lint flake8 molecule[docker] docker
+          path: "${{ github.repository }}"
+      - name: disable apparmor for mysql
+        run: sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
+      - name: parse apparmor for mysql
+        run: sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
       - name: molecule
-        run: molecule test
-        env:
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
-          MOLECULE_DISTRO: ${{ matrix.distro }}
+        uses: buluma/molecule-action@v4.0.6
+        with:
+          image: ${{ matrix.config.image }}
+          tag: ${{ matrix.config.tag }}
