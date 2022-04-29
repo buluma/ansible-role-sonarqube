@@ -33,6 +33,8 @@ molecule:
         tag: "latest"
       - image: "debian-systemd"
         tag: "bookworm"
+      - image: "ubuntu"
+        tag: "21.04"
 
 testing:
   stage: test
