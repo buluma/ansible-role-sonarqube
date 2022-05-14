@@ -1,5 +1,5 @@
 ---
-image: "buluma/github-action-molecule:4.0.6"
+image: "buluma/github-action-molecule:4.0.7"
 
 services:
   - docker:dind
@@ -13,11 +13,6 @@ molecule:
   allow_failure: true
   script:
     - image=${image} tag=${tag} molecule test
-  artifacts:
-    name: "$CI_JOB_STAGE-$CI_COMMIT_REF_NAME"
-    paths:
-      - /
-    expire_in: 1 day
   retry: 1
   parallel:
     matrix:
@@ -29,12 +24,12 @@ molecule:
         tag: "bionic"
       - image: "docker-ubuntu-systemd"
         tag: "focal"
+      - image: "docker-ubuntu-systemd"
+        tag: "jammy"
       - image: "debian-systemd"
         tag: "latest"
       - image: "debian-systemd"
         tag: "bookworm"
-      - image: "ubuntu"
-        tag: "21.04"
 
 testing:
   stage: test
@@ -54,6 +49,8 @@ testing:
         tag: "bionic"
       - image: "docker-ubuntu-systemd"
         tag: "focal"
+      - image: "docker-ubuntu-systemd"
+        tag: "jammy"
       - image: "debian-systemd"
         tag: "latest"
       - image: "debian-systemd"
@@ -81,6 +78,8 @@ role_testing:
         tag: "bionic"
       - image: "docker-ubuntu-systemd"
         tag: "focal"
+      - image: "docker-ubuntu-systemd"
+        tag: "jammy"
       - image: "debian-systemd"
         tag: "latest"
       - image: "debian-systemd"
@@ -98,3 +97,8 @@ release_job:
     tag_name: $CI_COMMIT_TAG
     name: 'Release $CI_COMMIT_TAG'
     description: 'Release created using the release-cli.'
+  artifacts:
+    name: "$CI_JOB_STAGE-$CI_COMMIT_REF_NAME"
+    paths:
+      - /
+    expire_in: 1 day
