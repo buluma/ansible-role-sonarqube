@@ -81,13 +81,6 @@
   tags: skip_ansible_lint
   when: systemd_service is defined and systemd_service.changed
   failed_when: false
-
-- name: start service
-  ansible.builtin.service:
-    name: sonar
-    state: started
-    enabled: yes
-
 # service end
 
 - name: ensure SonarQube is running and set to start on boot
