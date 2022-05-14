@@ -15,6 +15,24 @@
       - name: "ansible"
         version: "2.5.1"
         marketplace: true
+      - name: "ha"
+        version: "7.1"
+        marketplace: true
+      - name: "ha"
+        version: "7.1"
+        marketplace: true
+      - name: "scannermaven"
+        version: "3.9.1"
+        marketplace: true
+      - name: "authgithub"
+        version: "1.5"
+        marketplace: true
+      - name: "authgitlab"
+        version: "1.3.2"
+        marketplace: true
+      - name: "authgoogleoauth"
+        version: "1.6.1"
+        marketplace: true
   # pre_tasks:
   #   # TODO: Prepare Java 11
   #   - name: install openjdk (redhat)
