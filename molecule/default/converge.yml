@@ -21,9 +21,6 @@
       - name: "ha"
         version: "7.1"
         marketplace: true
-      - name: "scannermaven"
-        version: "3.9.1"
-        marketplace: true
       - name: "authgithub"
         version: "1.5"
         marketplace: true
