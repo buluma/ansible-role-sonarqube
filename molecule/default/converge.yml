@@ -14,22 +14,27 @@
       - name: "ansible"
         version: "2.4.0"
         marketplace: true
-  pre_tasks:
-    - name: install openjdk (redhat)
-      ansible.builtin.package:
-        name: java-11-openjdk
-        state: present
-      when: ansible_facts['os_family'] == "RedHat"
-    - name: add backports repository
-      ansible.builtin.apt_repository:
-        repo: deb http://ftp.debian.org/debian stretch-backports main
-        state: present
-        update_cache: yes
-      when: ansible_facts['os_family'] == "Debian"
-    - name: install openjdk (debian)
-      ansible.builtin.apt:
-        name: openjdk-11-jdk
-        state: present
-      when: ansible_facts['os_family'] == "Debian"
+  # pre_tasks:
+  #   # TODO: Prepare Java 11
+  #   - name: install openjdk (redhat)
+  #     ansible.builtin.package:
+  #       name: java-11-openjdk
+  #       state: present
+  #     when: ansible_facts['os_family'] == "RedHat"
+  #   - name: add backports repository
+  #     ansible.builtin.apt_repository:
+  #       repo: deb http://ftp.debian.org/debian stretch-backports main
+  #       state: present
+  #       update_cache: yes
+  #     when: ansible_facts['os_family'] == "Debian"
+  #   - name: install openjdk (debian)
+  #     ansible.builtin.apt:
+  #       name: openjdk-11-jdk
+  #       state: present
+  #     when: ansible_facts['os_family'] == "Debian"
   roles:
+    - role: buluma.java
+      java_vendor: openjdk
+      java_type: jdk
+      java_version: "11"
     - role: ansible-role-sonarqube

@@ -4,6 +4,8 @@
 
   roles:
     - name: buluma.bootstrap
+    - name: buluma.epel
+    # - name: buluma.java
 
   tasks:
     - name: "ensure apt cache is up to date"
