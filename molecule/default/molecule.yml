@@ -16,6 +16,8 @@ driver:
 platforms:
   - name: "sonarqube-${image:-docker-centos7-ansible}-${tag:-latest}${TOX_ENVNAME}"
     image: "${namespace:-buluma}/${image:-docker-centos7-ansible}:${tag:-latest}"
+    published_ports:
+      - 9000/tcp
     command: /sbin/init
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
