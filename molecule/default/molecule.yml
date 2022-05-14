@@ -34,3 +34,18 @@ provisioner:
       # callback_whitelist: profile_tasks
     ssh_connection:
       pipelining: true
+
+scenario:
+  name: default
+  test_sequence:
+    - lint
+    - destroy
+    # - dependency
+    - syntax
+    - create
+    # - prepare
+    - converge
+    # - idempotence
+    # - side_effect
+    # - verify
+    - destroy
