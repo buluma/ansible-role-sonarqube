@@ -39,11 +39,12 @@
     state: present
 
 - name: ensure JAVA is installed
-  command: "java -version"
+  ansible.builtin.command: "java -version"
   register: prereq_java
   changed_when: false
 
-- debug:
+- name: check java output
+  ansible.builtin.debug:
     msg: "{{ prereq_java.stderr }}"
 
 - name: fail if JAVA is not available

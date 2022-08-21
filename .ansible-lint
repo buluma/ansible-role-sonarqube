@@ -4,11 +4,12 @@
 #
 exclue_list:
   - ./molecule/default/collections.yml
+  - ./molecule/default/side_effect.yml
   - ./.tox
   - ./.cache
-
-warn_list:  # or 'skip_list' to silence them completely
-  - internal-error  # Unexpected internal error
-  - fqcn-builtins
-  - unnamed-task
-  - var-spacing
+#
+# warn_list:  # or 'skip_list' to silence them completely
+#   - internal-error  # Unexpected internal error
+#   - fqcn-builtins
+#   - unnamed-task
+#   - var-spacing

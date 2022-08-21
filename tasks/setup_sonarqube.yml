@@ -5,11 +5,13 @@
     path: "{{ sonar_daemon_dir }}/sonar.sh"
   register: sonar_binary_stat
 
-- block:
+- name: setup SonarQube
+  block:
     - name: download SonarQube binaries
       ansible.builtin.get_url:
         url: "{{ sonar_download_url }}"
         dest: "/tmp/{{ __sonar_archive }}"
+        mode: 0644
       retries: 5
       delay: 10
 

@@ -7,5 +7,5 @@
     sonar_plugins: []
   tasks:
     - name: "start role again and apply upgrade to {{ sonar_version }}"
-      include_role:
+      ansible.builtin.include_role:
         name: ansible-role-sonarqube
