@@ -62,7 +62,7 @@
     loop_var: "sonar_cplugin"
 
 - name: flush handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 # bring back
 # - name: ensure target version matches

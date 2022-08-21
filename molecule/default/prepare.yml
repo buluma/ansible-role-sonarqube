@@ -3,8 +3,8 @@
   hosts: all
 
   roles:
-    - name: buluma.bootstrap
-    - name: buluma.epel
+    - role: buluma.bootstrap
+    - role: buluma.epel
     # - name: buluma.java
 
   tasks:
