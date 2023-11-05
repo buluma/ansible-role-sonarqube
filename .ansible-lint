@@ -2,14 +2,18 @@
 #
 # Ansible managed
 #
-exclue_list:
-  - ./molecule/default/collections.yml
-  - ./molecule/default/side_effect.yml
-  - ./.tox
-  - ./.cache
-#
-# warn_list:  # or 'skip_list' to silence them completely
-#   - internal-error  # Unexpected internal error
-#   - fqcn-builtins
-#   - unnamed-task
-#   - var-spacing
+exclude_paths:
+  - meta/preferences.yml
+  - molecule/default/prepare.yml
+  - molecule/default/converge.yml
+  - molecule/default/collections.yml
+  - .tox
+  - .cache
+  - .github
+  - requirements.yml
+
+skip_list:
+  - yaml[truthy]
+
+enable_list:
+  - name[prefix]
