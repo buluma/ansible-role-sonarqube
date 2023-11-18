@@ -1,4 +1,4 @@
-# [sonarqube](#sonarqube)
+# [Ansible role sonarqube](#sonarqube)
 
 An Ansible Role that install SonarQube.
 
