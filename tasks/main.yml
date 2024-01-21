@@ -29,7 +29,8 @@
     - "{{ sonar_temp_dir }}"
 
 - name: Execute Debian specific tasks
-  include_tasks: setup_debian.yml
+  ansible.builtin.import_tasks:
+    file: setup_debian.yml
   when: ansible_os_family == 'Debian'
 
 - name: Set max_map_count value (required by elasticsearch)
@@ -61,7 +62,8 @@
     file: setup_sonarqube.yml
 
 - name: Install plugins
-  include_tasks: setup_plugin.yml
+  ansible.builtin.import_tasks:
+    file: setup_plugin.yml
   with_items: "{{ sonar_plugins }}"
   loop_control:
     loop_var: "sonar_cplugin"

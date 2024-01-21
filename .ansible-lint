@@ -4,9 +4,7 @@
 #
 exclude_paths:
   - meta/preferences.yml
-  - molecule/default/prepare.yml
-  - molecule/default/converge.yml
-  - molecule/default/collections.yml
+  - molecule
   - .tox
   - .cache
   - .github
@@ -14,6 +12,7 @@ exclude_paths:
 
 skip_list:
   - yaml[truthy]
+  - name[template]
 
 enable_list:
   - name[prefix]

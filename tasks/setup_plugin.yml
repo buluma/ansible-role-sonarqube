@@ -1,10 +1,12 @@
 ---
 - name: setup_plugin | Install plugin from binaries.sonarsource.com
-  ansible.builtin.include: setup_plugin.yml
+  ansible.builtin.import_tasks:
+    file: setup_plugin.yml
   when: not sonar_cplugin.get('marketplace', false)|bool
 
 - name: setup_plugin | Install plugin from updates.sonarsource.com
-  ansible.builtin.include: setup_plugin_marketplace.yml
+  ansible.builtin.import_tasks:
+    file: setup_plugin_marketplace.yml
   when: sonar_cplugin.get('marketplace', false)|bool
 
 - name: setup_plugin | "{{ sonar_cplugin.name }} | download current plugin"
