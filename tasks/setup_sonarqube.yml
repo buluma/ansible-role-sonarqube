@@ -6,8 +6,9 @@
   register: sonar_binary_stat
 
 - name: setup_sonarqube | Setup SonarQube
+  when: not sonar_binary_stat.stat.exists
   block:
-    - name: setup_sonarqube | download SonarQube binaries
+    - name: setup_sonarqube | Download SonarQube binaries
       ansible.builtin.get_url:
         url: "{{ sonar_download_url }}"
         dest: "/tmp/{{ __sonar_archive }}"
@@ -37,8 +38,6 @@
         state: stopped
       when: '"sonar.service" in ansible_facts.services'
       notify: Warn about post-upgrade steps
-
-  when: not sonar_binary_stat.stat.exists
 
 - name: setup_sonarqube | Ensure SonarQube as init script for service management
   ansible.builtin.file:

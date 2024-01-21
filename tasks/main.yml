@@ -62,8 +62,7 @@
     file: setup_sonarqube.yml
 
 - name: Install plugins
-  ansible.builtin.import_tasks:
-    file: setup_plugin.yml
+  ansible.builtin.include_tasks: setup_plugin.yml
   with_items: "{{ sonar_plugins }}"
   loop_control:
     loop_var: "sonar_cplugin"
