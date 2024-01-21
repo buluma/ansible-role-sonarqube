@@ -1,13 +1,13 @@
 ---
-- name: install plugin from binaries.sonarsource.com
-  ansible.builtin.include: setup_plugin_binaries.yml
+- name: setup_plugin | Install plugin from binaries.sonarsource.com
+  ansible.builtin.include: setup_plugin.yml
   when: not sonar_cplugin.get('marketplace', false)|bool
 
-- name: install plugin from updates.sonarsource.com
+- name: setup_plugin | Install plugin from updates.sonarsource.com
   ansible.builtin.include: setup_plugin_marketplace.yml
   when: sonar_cplugin.get('marketplace', false)|bool
 
-- name: "{{ sonar_cplugin.name }} | download current plugin"
+- name: setup_plugin | "{{ sonar_cplugin.name }} | download current plugin"
   ansible.builtin.get_url:
     url: "{{ cplugin_url }}"
     dest: "{{ __sonar_plugin_home }}"
@@ -17,4 +17,4 @@
   retries: 5
   delay: 10
   notify:
-    - "restart SonarQube service"
+    - "Restart SonarQube service"
