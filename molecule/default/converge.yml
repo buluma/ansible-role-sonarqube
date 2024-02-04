@@ -49,8 +49,4 @@
   #       state: present
   #     when: ansible_facts['os_family'] == "Debian"
   roles:
-    - role: buluma.java
-      java_vendor: openjdk
-      java_type: jdk
-      java_version: "11"
     - role: ansible-role-sonarqube
