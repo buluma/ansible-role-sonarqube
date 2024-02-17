@@ -62,10 +62,6 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
   #       state: present
   #     when: ansible_facts['os_family'] == "Debian"
   roles:
-    - role: buluma.java
-      java_vendor: openjdk
-      java_type: jdk
-      java_version: "11"
     - role: buluma.sonarqube
 ```
 
@@ -79,15 +75,18 @@ The machine needs to be prepared. In CI this is done using [`molecule/default/pr
   roles:
     - role: buluma.bootstrap
     - role: buluma.epel
-    # - name: buluma.java
+    - role: buluma.java
+      java_vendor: openjdk
+      java_type: jdk
+      java_version: "11"
 
   tasks:
-    - name: "ensure apt cache is up to date"
+    - name: "Ensure apt cache is up to date"
       ansible.builtin.apt:
         update_cache: yes
       when: ansible_distribution == 'Ubuntu'
 
-    - name: "install package dependencies"
+    - name: "Install package dependencies"
       ansible.builtin.package:
         name: "{{ item }}"
         state: "present"
@@ -434,7 +433,7 @@ This role has been tested on these [container images](https://hub.docker.com/u/b
 |[Ubuntu](https://hub.docker.com/repository/docker/buluma/ubuntu/general)|all|
 |[Debian](https://hub.docker.com/repository/docker/buluma/debian/general)|all|
 
-The minimum version of Ansible required is 2.4, tests have been done to:
+The minimum version of Ansible required is 2.12, tests have been done to:
 
 - The previous version.
 - The current version.
