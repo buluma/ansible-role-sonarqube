@@ -1,0 +1,15 @@
+digraph PhiloDilemma {
+  label = "Michael Buluma" ;
+  overlap=false
+  {
+    "sonarqube" [fillcolor=yellow style=filled penwidth=3]
+    "buluma.bootstrap" [fillcolor=green style=filled]
+    "buluma.epel" [fillcolor=green style=filled]
+    "buluma.java" [fillcolor=green style=filled]
+    "buluma.service" [fillcolor=green style=filled]
+  }
+  "sonarqube" -> "buluma.bootstrap"
+  "sonarqube" -> "buluma.epel"
+  "sonarqube" -> "buluma.java"
+  "sonarqube" -> "buluma.service"
+}
