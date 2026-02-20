@@ -9,7 +9,7 @@
     file: setup_plugin_marketplace.yml
   when: sonar_cplugin.get('marketplace', false)|bool
 
-- name: setup_plugin | "{{ sonar_cplugin.name }} | download current plugin"
+- name: setup_plugin | Download current plugin {{ sonar_cplugin.name }}
   ansible.builtin.get_url:
     url: "{{ cplugin_url }}"
     dest: "{{ __sonar_plugin_home }}"
