@@ -191,7 +191,6 @@ sonar_jdbc_maxidle: 5
 # without extra ones being created, or zero to create none.
 sonar_jdbc_minidle: 2
 
-
 # The maximum number of milliseconds that the pool will wait (when there
 # are no available connections) for a connection to be returned before
 # throwing an exception, or <= 0 to wait indefinitely.
@@ -199,7 +198,6 @@ sonar_jdbc_maxwait: 5000
 
 sonar_jdbc_min_evictable_idle_time_millis: 600000
 sonar_jdbc_time_between_eviction_runs_millis: 30000
-
 
 # SonarQube Web Server configuration
 # sonar_web_java_opts: "-Xmx512m -Xms128m -XX:+HeapDumpOnOutOfMemoryError -Djava.net.preferIPv4Stack=true"
@@ -289,7 +287,6 @@ sonar_search_port: 9001
 # Default is 127.0.0.1.
 # As a security precaution, should NOT be set to a publicly available address.
 sonar_search_host: 127.0.0.1
-
 
 # --------------------------------------------------------------------------------------------------
 # UPDATE CENTER
@@ -382,7 +379,6 @@ sonar_notifications_delay: 60
 
 # Pass any custom Java properties to sonar.properties
 sonar_additional_properties: {}
-
 # --------------------------------------------------------------------------------------------------
 # DEVELOPMENT - only for developers
 # The following properties MUST NOT be used in production environments.
