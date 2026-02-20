@@ -5,20 +5,20 @@ galaxy_info:
   description: An Ansible Role that install SonarQube.
   license: Apache-2.0
   company: ShadowNet
-  min_ansible_version: '2.12'
+  min_ansible_version: "2.12"
   platforms:
     - name: EL
       versions:
         - all
-  - name: Ubuntu
-    versions:
-    - all
-  - name: Debian
-    versions:
-    - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
   galaxy_tags:
     - centos
-  - development
-  - monitoring
-  - sonarqube
+    - development
+    - monitoring
+    - sonarqube
 dependencies: []

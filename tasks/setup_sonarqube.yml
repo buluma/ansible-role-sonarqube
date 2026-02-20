@@ -1,5 +1,4 @@
 ---
-
 - name: setup_sonarqube | Check if SonarQube binary exists
   ansible.builtin.stat:
     path: "{{ sonar_daemon_dir }}/sonar.sh"
@@ -12,7 +11,7 @@
       ansible.builtin.get_url:
         url: "{{ sonar_download_url }}"
         dest: "/tmp/{{ __sonar_archive }}"
-        mode: 0644
+        mode: "0644"
       retries: 5
       delay: 10
 
@@ -22,7 +21,7 @@
         dest: "{{ sonar_install_directory }}"
         owner: "{{ sonar_user }}"
         group: "{{ sonar_group }}"
-        copy: no
+        copy: false
 
     - name: setup_sonarqube | Remove SonarQube archive
       ansible.builtin.file:
@@ -78,7 +77,7 @@
 
 - name: setup_sonarqube | Force systemd to reread configs
   ansible.builtin.systemd:
-    daemon_reload: yes
+    daemon_reload: true
   tags: skip_ansible_lint
   when: systemd_service is defined and systemd_service.changed
   failed_when: false
@@ -88,13 +87,13 @@
   ansible.builtin.service:
     name: sonar
     state: started
-    enabled: yes
+    enabled: true
 
 - name: setup_sonarqube | Ensure SonarQube files permissions
   ansible.builtin.file:
     path: "{{ sonar_install_directory }}"
     state: directory
-    recurse: yes
+    recurse: true
     owner: "{{ sonar_user }}"
     group: "{{ sonar_group }}"
     mode: "o-w"

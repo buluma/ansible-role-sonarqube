@@ -10,7 +10,7 @@
   ansible.builtin.user:
     name: "{{ sonar_user }}"
     group: "{{ sonar_group }}"
-    createhome: no
+    createhome: false
     shell: "/sbin/nologin"
     comment: "SonarQube System user"
     state: present

@@ -1,5 +1,4 @@
 ---
-
 - name: setup_prepare | Overwrite SonarQube download url
   ansible.builtin.set_fact:
     sonar_download_url: "{{ __sonar_download_url }}"

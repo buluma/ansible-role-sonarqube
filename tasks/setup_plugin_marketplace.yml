@@ -7,7 +7,7 @@
   ansible.builtin.uri:
     url: "{{ plugin_url }}"
     method: GET
-    return_content: yes
+    return_content: true
     status_code: 200
     body_format: json
   register: result
