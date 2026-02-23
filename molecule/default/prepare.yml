@@ -1,24 +1,24 @@
 ---
-  - name: Prepare
-    hosts: all
+- name: Prepare
+  hosts: all
 
-    roles:
-      - role: buluma.bootstrap
-      - role: buluma.epel
-      - role: buluma.java
-        java_vendor: openjdk
-        java_type: jdk
-        java_version: "11"
+  roles:
+  - role: buluma.bootstrap
+  - role: buluma.epel
+  - role: buluma.java
+    java_vendor: openjdk
+    java_type: jdk
+    java_version: "11"
 
-    tasks:
-      - name: "Ensure apt cache is up to date"
-        ansible.builtin.apt:
-          update_cache: yes
-        when: ansible_distribution == 'Ubuntu'
+  tasks:
+  - name: "Ensure apt cache is up to date"
+    ansible.builtin.apt:
+      update_cache: yes
+    when: ansible_distribution == 'Ubuntu'
 
-      - name: "Install package dependencies"
-        ansible.builtin.package:
-          name: "{{ item }}"
-          state: "present"
-        with_items:
-          - unzip
+  - name: "Install package dependencies"
+    ansible.builtin.package:
+      name: "{{ item }}"
+      state: "present"
+    with_items:
+    - unzip

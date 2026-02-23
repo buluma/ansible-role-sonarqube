@@ -12,37 +12,37 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
 
 ```yaml
 ---
-  - name: Converge
-    hosts: all
-    vars:
-      sonar_version: 7.9.6
-      sonar_web_host: 127.0.0.1
-      sonar_plugins:
-        - name: "sonar-l10n-pt"
-          version: "6.4"
-          commercial: false
-          url: "https://github.com/felipebz/sonar-l10n-pt/releases/download/v6.4/sonar-l10n-pt-plugin-6.4.jar"
-        - name: "sonar-html-plugin"
-          version: "3.2.0.2082"
-          commercial: false
-        - name: "ansible"
-          version: "2.5.1"
-          marketplace: true
-        - name: "ha"
-          version: "7.1"
-          marketplace: true
-        - name: "ha"
-          version: "7.1"
-          marketplace: true
-        - name: "authgithub"
-          version: "1.5"
-          marketplace: true
-        - name: "authgitlab"
-          version: "1.3.2"
-          marketplace: true
-        - name: "authgoogleoauth"
-          version: "1.6.1"
-          marketplace: true
+- name: Converge
+  hosts: all
+  vars:
+    sonar_version: 7.9.6
+    sonar_web_host: 127.0.0.1
+    sonar_plugins:
+    - name: "sonar-l10n-pt"
+      version: "6.4"
+      commercial: false
+      url: "https://github.com/felipebz/sonar-l10n-pt/releases/download/v6.4/sonar-l10n-pt-plugin-6.4.jar"
+    - name: "sonar-html-plugin"
+      version: "3.2.0.2082"
+      commercial: false
+    - name: "ansible"
+      version: "2.5.1"
+      marketplace: true
+    - name: "ha"
+      version: "7.1"
+      marketplace: true
+    - name: "ha"
+      version: "7.1"
+      marketplace: true
+    - name: "authgithub"
+      version: "1.5"
+      marketplace: true
+    - name: "authgitlab"
+      version: "1.3.2"
+      marketplace: true
+    - name: "authgoogleoauth"
+      version: "1.6.1"
+      marketplace: true
   # pre_tasks:
   #   # TODO: Prepare Java 11
   #   - name: install openjdk (redhat)
@@ -61,37 +61,37 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
   #       name: openjdk-11-jdk
   #       state: present
   #     when: ansible_facts['os_family'] == "Debian"
-    roles:
-      - role: buluma.sonarqube
+  roles:
+  - role: buluma.sonarqube
 ```
 
 The machine needs to be prepared. In CI this is done using [`molecule/default/prepare.yml`](https://github.com/buluma/ansible-role-sonarqube/blob/master/molecule/default/prepare.yml):
 
 ```yaml
 ---
-  - name: Prepare
-    hosts: all
+- name: Prepare
+  hosts: all
 
-    roles:
-      - role: buluma.bootstrap
-      - role: buluma.epel
-      - role: buluma.java
-        java_vendor: openjdk
-        java_type: jdk
-        java_version: "11"
+  roles:
+  - role: buluma.bootstrap
+  - role: buluma.epel
+  - role: buluma.java
+    java_vendor: openjdk
+    java_type: jdk
+    java_version: "11"
 
-    tasks:
-      - name: "Ensure apt cache is up to date"
-        ansible.builtin.apt:
-          update_cache: yes
-        when: ansible_distribution == 'Ubuntu'
+  tasks:
+  - name: "Ensure apt cache is up to date"
+    ansible.builtin.apt:
+      update_cache: yes
+    when: ansible_distribution == 'Ubuntu'
 
-      - name: "Install package dependencies"
-        ansible.builtin.package:
-          name: "{{ item }}"
-          state: "present"
-        with_items:
-          - unzip
+  - name: "Install package dependencies"
+    ansible.builtin.package:
+      name: "{{ item }}"
+      state: "present"
+    with_items:
+    - unzip
 ```
 
 Also see a [full explanation and example](https://buluma.github.io/how-to-use-these-roles.html) on how to use these roles.
