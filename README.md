@@ -341,8 +341,7 @@ sonar_web_access_logs_enable: true
 #    - "combined" is another format widely recognized, shortcut to: %h %l %u [%t] "%r" %s %b "%i{Referer}" "%i{User-Agent}"
 #    - else a custom pattern. See http://logback.qos.ch/manual/layouts.html#AccessPatternLayout.
 # If SonarQube is behind a reverse proxy, then the following value allows to display the correct remote IP address:
-sonar_web_access_logs_pattern: "%i{X-Forwarded-For} %l %u [%t] \"%r\" %s %b \"%i{Referer}\"\
-  \ \"%i{User-Agent}\""
+sonar_web_access_logs_pattern: "%i{X-Forwarded-For} %l %u [%t] \"%r\" %s %b \"%i{Referer}\" \"%i{User-Agent}\""
 
 # --------------------------------------------------------------------------------------------------
 # LDAP
