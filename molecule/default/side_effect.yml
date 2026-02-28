@@ -6,6 +6,6 @@
     sonar_version: 8.9.3.48735
     sonar_plugins: []
   tasks:
-  - name: "start role again and apply upgrade to {{ sonar_version }}"
-    ansible.builtin.include_role:
-      name: ansible-role-sonarqube
+    - name: "Start role again and apply upgrade to {{ sonar_version }}"
+      ansible.builtin.include_role:
+        name: ansible-role-sonarqube

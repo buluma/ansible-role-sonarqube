@@ -69,7 +69,6 @@
 
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers
-
 # bring back
 # - name: ensure target version matches
 #   ansible.builtin.uri:
