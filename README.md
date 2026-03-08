@@ -2,9 +2,9 @@
 
 An Ansible Role that install SonarQube.
 
-|GitHub|GitLab|Downloads|Version|
-|------|------|---------|-------|
-|[![github](https://github.com/buluma/ansible-role-sonarqube/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-sonarqube/actions)|[![gitlab](https://gitlab.com/shadowwalker/ansible-role-sonarqube/badges/master/pipeline.svg)](https://gitlab.com/shadowwalker/ansible-role-sonarqube)|[![downloads](https://img.shields.io/ansible/role/d/buluma/sonarqube)](https://galaxy.ansible.com/buluma/sonarqube)|[![Version](https://img.shields.io/github/release/buluma/ansible-role-sonarqube.svg)](https://github.com/buluma/ansible-role-sonarqube/releases/)|
+|GitHub|Issues|Pull Requests|Version|Downloads|
+|------|------|-------------|-------|---------|
+|[![github](https://github.com/buluma/ansible-role-sonarqube/actions/workflows/molecule.yml/badge.svg)](https://github.com/buluma/ansible-role-sonarqube/actions/workflows/molecule.yml)|[![Issues](https://img.shields.io/github/issues/buluma/ansible-role-sonarqube.svg)](https://github.com/buluma/ansible-role-sonarqube/issues/)|[![PullRequests](https://img.shields.io/github/issues-pr-closed-raw/buluma/ansible-role-sonarqube.svg)](https://github.com/buluma/ansible-role-sonarqube/pulls/)|[![Version](https://img.shields.io/github/release/buluma/ansible-role-sonarqube.svg)](https://github.com/buluma/ansible-role-sonarqube/releases/)|[![Ansible Role](https://img.shields.io/ansible/role/d/buluma/sonarqube)](https://galaxy.ansible.com/ui/standalone/roles/buluma/sonarqube/documentation)|
 
 ## [Example Playbook](#example-playbook)
 
@@ -18,31 +18,31 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
     sonar_version: 7.9.6
     sonar_web_host: 127.0.0.1
     sonar_plugins:
-    - name: "sonar-l10n-pt"
-      version: "6.4"
-      commercial: false
-      url: "https://github.com/felipebz/sonar-l10n-pt/releases/download/v6.4/sonar-l10n-pt-plugin-6.4.jar"
-    - name: "sonar-html-plugin"
-      version: "3.2.0.2082"
-      commercial: false
-    - name: "ansible"
-      version: "2.5.1"
-      marketplace: true
-    - name: "ha"
-      version: "7.1"
-      marketplace: true
-    - name: "ha"
-      version: "7.1"
-      marketplace: true
-    - name: "authgithub"
-      version: "1.5"
-      marketplace: true
-    - name: "authgitlab"
-      version: "1.3.2"
-      marketplace: true
-    - name: "authgoogleoauth"
-      version: "1.6.1"
-      marketplace: true
+      - name: "sonar-l10n-pt"
+        version: "6.4"
+        commercial: false
+        url: "https://github.com/felipebz/sonar-l10n-pt/releases/download/v6.4/sonar-l10n-pt-plugin-6.4.jar"
+      - name: "sonar-html-plugin"
+        version: "3.2.0.2082"
+        commercial: false
+      - name: "ansible"
+        version: "2.5.1"
+        marketplace: true
+      - name: "ha"
+        version: "7.1"
+        marketplace: true
+      - name: "ha"
+        version: "7.1"
+        marketplace: true
+      - name: "authgithub"
+        version: "1.5"
+        marketplace: true
+      - name: "authgitlab"
+        version: "1.3.2"
+        marketplace: true
+      - name: "authgoogleoauth"
+        version: "1.6.1"
+        marketplace: true
   # pre_tasks:
   #   # TODO: Prepare Java 11
   #   - name: install openjdk (redhat)
@@ -62,7 +62,7 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
   #       state: present
   #     when: ansible_facts['os_family'] == "Debian"
   roles:
-  - role: buluma.sonarqube
+    - role: buluma.sonarqube
 ```
 
 The machine needs to be prepared. In CI this is done using [`molecule/default/prepare.yml`](https://github.com/buluma/ansible-role-sonarqube/blob/master/molecule/default/prepare.yml):
@@ -73,25 +73,25 @@ The machine needs to be prepared. In CI this is done using [`molecule/default/pr
   hosts: all
 
   roles:
-  - role: buluma.bootstrap
-  - role: buluma.epel
-  - role: buluma.java
-    java_vendor: openjdk
-    java_type: jdk
-    java_version: "11"
+    - role: buluma.bootstrap
+    - role: buluma.epel
+    - role: buluma.java
+      java_vendor: openjdk
+      java_type: jdk
+      java_version: "11"
 
   tasks:
-  - name: "Ensure apt cache is up to date"
-    ansible.builtin.apt:
-      update_cache: yes
-    when: ansible_distribution == 'Ubuntu'
+    - name: "Ensure apt cache is up to date"
+      ansible.builtin.apt:
+        update_cache: yes
+      when: ansible_distribution == 'Ubuntu'
 
-  - name: "Install package dependencies"
-    ansible.builtin.package:
-      name: "{{ item }}"
-      state: "present"
-    with_items:
-    - unzip
+    - name: "Install package dependencies"
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: "present"
+      with_items:
+        - unzip
 ```
 
 Also see a [full explanation and example](https://buluma.github.io/how-to-use-these-roles.html) on how to use these roles.
@@ -404,29 +404,30 @@ sonar_search_http_port: -1
 
 The following roles are used to prepare a system. You can prepare your system in another way.
 
-| Requirement | GitHub | GitLab |
-|-------------|--------|--------|
-|[buluma.bootstrap](https://galaxy.ansible.com/buluma/bootstrap)|[![Build Status GitHub](https://github.com/buluma/ansible-role-bootstrap/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-bootstrap/actions)|[![Build Status GitLab](https://gitlab.com/shadowwalker/ansible-role-bootstrap/badges/master/pipeline.svg)](https://gitlab.com/shadowwalker/ansible-role-bootstrap)|
-|[buluma.epel](https://galaxy.ansible.com/buluma/epel)|[![Build Status GitHub](https://github.com/buluma/ansible-role-epel/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-epel/actions)|[![Build Status GitLab](https://gitlab.com/shadowwalker/ansible-role-epel/badges/master/pipeline.svg)](https://gitlab.com/shadowwalker/ansible-role-epel)|
-|[buluma.java](https://galaxy.ansible.com/buluma/java)|[![Build Status GitHub](https://github.com/buluma/ansible-role-java/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-java/actions)|[![Build Status GitLab](https://gitlab.com/shadowwalker/ansible-role-java/badges/master/pipeline.svg)](https://gitlab.com/shadowwalker/ansible-role-java)|
-|[buluma.service](https://galaxy.ansible.com/buluma/service)|[![Build Status GitHub](https://github.com/buluma/ansible-role-service/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-service/actions)|[![Build Status GitLab](https://gitlab.com/shadowwalker/ansible-role-service/badges/master/pipeline.svg)](https://gitlab.com/shadowwalker/ansible-role-service)|
+| Requirement | GitHub |
+|-------------|--------|
+|[buluma.bootstrap](https://galaxy.ansible.com/buluma/bootstrap)|[![Build Status GitHub](https://github.com/buluma/ansible-role-bootstrap/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-bootstrap/actions)|
+|[buluma.epel](https://galaxy.ansible.com/buluma/epel)|[![Build Status GitHub](https://github.com/buluma/ansible-role-epel/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-epel/actions)|
+|[buluma.java](https://galaxy.ansible.com/buluma/java)|[![Build Status GitHub](https://github.com/buluma/ansible-role-java/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-java/actions)|
+|[buluma.service](https://galaxy.ansible.com/buluma/service)|[![Build Status GitHub](https://github.com/buluma/ansible-role-service/workflows/Ansible%20Molecule/badge.svg)](https://github.com/buluma/ansible-role-service/actions)|
 
 ## [Context](#context)
 
 This role is part of many compatible roles. Have a look at [the documentation of these roles](https://buluma.github.io/) for further information.
 
 Here is an overview of related roles:
+
 ![dependencies](https://raw.githubusercontent.com/buluma/ansible-role-sonarqube/png/requirements.png "Dependencies")
 
 ## [Compatibility](#compatibility)
 
-This role has been tested on these [container images](https://hub.docker.com/u/buluma):
+This role has been tested on these [container images](https://hub.docker.com/u/robertdebock):
 
 |container|tags|
 |---------|----|
-|[EL](https://hub.docker.com/r/buluma/enterpriselinux)|all|
-|[Ubuntu](https://hub.docker.com/r/buluma/ubuntu)|all|
-|[Debian](https://hub.docker.com/r/buluma/debian)|all|
+|[EL](https://hub.docker.com/r/robertdebock/enterpriselinux)|all|
+|[Ubuntu](https://hub.docker.com/r/robertdebock/ubuntu)|all|
+|[Debian](https://hub.docker.com/r/robertdebock/debian)|all|
 
 The minimum version of Ansible required is 2.12, tests have been done on:
 
@@ -443,3 +444,4 @@ If you find issues, please register them on [GitHub](https://github.com/buluma/a
 ## [Author Information](#author-information)
 
 [buluma](https://buluma.github.io/)
+
