@@ -125,7 +125,7 @@ sonar_data_dir: "{{ sonar_base_dir }}/data"
 sonar_temp_dir: "{{ sonar_base_dir }}/temp"
 
 # SonarQube version to install
-sonar_version: 7.3
+sonar_version: "7.3"
 
 # SonarQube system group
 sonar_group: sonar
@@ -209,7 +209,7 @@ sonar_web_java_additional_opts: ""
 # Binding IP address. For servers with more than one IP address, this property specifies which
 # address will be used for listening on the specified ports.
 # By default, ports will be used on all IP addresses associated with the server.
-sonar_web_host: 0.0.0.0
+sonar_web_host: "0.0.0.0"
 
 # Web context. When set, it must start with forward slash (for example /sonarqube).
 # The default value is root context (empty value).
@@ -286,7 +286,7 @@ sonar_search_port: 9001
 # Elasticsearch host. The search server will bind this address and the search client will connect to it.
 # Default is 127.0.0.1.
 # As a security precaution, should NOT be set to a publicly available address.
-sonar_search_host: 127.0.0.1
+sonar_search_host: "127.0.0.1"
 
 # --------------------------------------------------------------------------------------------------
 # UPDATE CENTER
@@ -444,3 +444,4 @@ If you find issues, please register them on [GitHub](https://github.com/buluma/a
 ## [Author Information](#author-information)
 
 [buluma](https://buluma.github.io/)
+
