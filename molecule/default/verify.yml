@@ -1,0 +1,11 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Check sonarqube user exists
+      ansible.builtin.command:
+        cmd: id sonarqube
+      changed_when: false
