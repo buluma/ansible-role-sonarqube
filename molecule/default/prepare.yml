@@ -14,7 +14,7 @@
     - name: "Ensure apt cache is up to date"
       ansible.builtin.apt:
         update_cache: yes
-      when: ansible_facts.distribution == 'Ubuntu'
+      when: ansible_facts['distribution'] == 'Ubuntu'
 
     - name: "Install package dependencies"
       ansible.builtin.package:

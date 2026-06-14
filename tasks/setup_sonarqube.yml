@@ -35,7 +35,7 @@
       ansible.builtin.service:
         name: sonar
         state: stopped
-      when: '"sonar.service" in ansible_facts.services'
+      when: '"sonar.service" in ansible_facts['services']'
       notify: Warn about post-upgrade steps
 
 - name: setup_sonarqube | Ensure SonarQube as init script for service management
@@ -43,7 +43,7 @@
     src: "{{ sonar_daemon_dir }}/sonar.sh"
     dest: /etc/init.d/sonar
     state: link
-  when: "ansible_facts.service_mgr != 'systemd'"
+  when: "ansible_facts['service_mgr'] != 'systemd'"
 
 # - name: setup_sonarqube | copy SonarQube systemd unit file into place (for systemd systems)
 #   ansible.builtin.template:
@@ -53,7 +53,7 @@
 #     group: root
 #     mode: 0755
 #   register: systemd_service
-#   when: "ansible_facts.service_mgr == 'systemd'"
+#   when: "ansible_facts['service_mgr'] == 'systemd'"
 #
 # - name: setup_sonarqube | force systemd to reread configs
 #   ansible.builtin.systemd:
