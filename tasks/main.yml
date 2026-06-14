@@ -31,7 +31,7 @@
 - name: Execute Debian specific tasks
   ansible.builtin.import_tasks:
     file: setup_debian.yml
-  when: ansible_os_family == 'Debian'
+  when: ansible_facts.os_family == 'Debian'
 
 - name: Set max_map_count value (required by elasticsearch)
   ansible.posix.sysctl:
