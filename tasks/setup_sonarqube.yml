@@ -35,7 +35,7 @@
       ansible.builtin.service:
         name: sonar
         state: stopped
-      when: '"sonar.service" in ansible_facts['services']'
+      when: '"sonar.service" in ansible_facts["services"]'
       notify: Warn about post-upgrade steps
 
 - name: setup_sonarqube | Ensure SonarQube as init script for service management
