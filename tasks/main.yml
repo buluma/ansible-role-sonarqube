@@ -33,6 +33,11 @@
     file: setup_debian.yml
   when: ansible_facts['os_family'] == 'Debian'
 
+- name: Ensure procps is installed (provides sysctl)
+  ansible.builtin.package:
+    name: "{{ 'procps-ng' if ansible_facts['os_family'] == 'RedHat' else 'procps' }}"
+    state: present
+
 - name: Set max_map_count value (required by elasticsearch)
   ansible.posix.sysctl:
     name: vm.max_map_count
