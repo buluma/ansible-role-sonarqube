@@ -1,7 +1,7 @@
 ---
 - name: setup_plugin | Install plugin from binaries.sonarsource.com
   ansible.builtin.import_tasks:
-    file: setup_plugin.yml
+    file: setup_plugin_binaries.yml
   when: not sonar_cplugin.get('marketplace', false)|bool
 
 - name: setup_plugin | Install plugin from updates.sonarsource.com
