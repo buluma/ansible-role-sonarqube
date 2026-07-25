@@ -73,7 +73,7 @@
     name: buluma.service
   vars:
     service_list:
-      - name: setup_sonarqube | Sonar
+      - name: sonar
         description: "SonarQube"
         start_command: "{{ sonar_daemon_dir }}/sonar.sh"
         working_directory: "{{ sonar_daemon_dir }}"
