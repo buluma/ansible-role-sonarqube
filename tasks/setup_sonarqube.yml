@@ -15,6 +15,11 @@
       retries: 5
       delay: 10
 
+    - name: setup_sonarqube | Ensure unzip is installed
+      ansible.builtin.package:
+        name: unzip
+        state: present
+
     - name: setup_sonarqube | Expand SonarQube binaries
       ansible.builtin.unarchive:
         src: "/tmp/{{ __sonar_archive }}"
