@@ -41,3 +41,31 @@
   #     when: ansible_facts['os_family'] == "Debian"
   roles:
     - role: buluma.sonarqube
+
+  post_tasks:
+    # TEMPORARY: diagnosing why the sonar service still reports changed on
+    # molecule's idempotence re-check after dropping sonar-html-plugin.
+    - name: DEBUG | sonar service status
+      ansible.builtin.command: systemctl status sonar --no-pager -l
+      register: __debug_sonar_status
+      changed_when: false
+      failed_when: false
+    - name: DEBUG | print sonar service status
+      ansible.builtin.debug:
+        var: __debug_sonar_status.stdout_lines
+    - name: DEBUG | is-enabled
+      ansible.builtin.command: systemctl is-enabled sonar
+      register: __debug_sonar_enabled
+      changed_when: false
+      failed_when: false
+    - name: DEBUG | print is-enabled
+      ansible.builtin.debug:
+        var: __debug_sonar_enabled.stdout_lines
+    - name: DEBUG | sonar journal
+      ansible.builtin.command: journalctl -u sonar --no-pager -n 100
+      register: __debug_sonar_journal
+      changed_when: false
+      failed_when: false
+    - name: DEBUG | print sonar journal
+      ansible.builtin.debug:
+        var: __debug_sonar_journal.stdout_lines
