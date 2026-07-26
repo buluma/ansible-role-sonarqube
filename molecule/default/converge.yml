@@ -9,9 +9,12 @@
         version: "6.4"
         commercial: false
         url: "https://github.com/felipebz/sonar-l10n-pt/releases/download/v6.4/sonar-l10n-pt-plugin-6.4.jar"
-      - name: "sonar-html-plugin"
-        version: "3.2.0.2082"
-        commercial: false
+      # sonar-html-plugin removed from this fixture: SonarQube 25.1 bundles
+      # HTML analysis as a built-in feature under the same plugin key
+      # ("web"), so installing the standalone jar makes the web server
+      # refuse to start with "Found a plugin 'SonarHTML' ... with the same
+      # key [web] as a built-in feature". Confirmed by reproducing the
+      # crash locally (journalctl showed the exact MessageException).
       # marketplace: true plugins removed from this fixture: SonarSource's
       # legacy update-center API (update.sonarsource.org and its
       # downloads.sonarsource.com redirect target) now returns 403 AccessDenied
