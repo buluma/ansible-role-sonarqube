@@ -7,5 +7,5 @@
   tasks:
     - name: Check sonarqube user exists
       ansible.builtin.command:
-        cmd: id sonarqube
+        cmd: id sonar
       changed_when: false

@@ -2,7 +2,7 @@
 - name: Converge
   hosts: all
   vars:
-    sonar_version: 7.9.6
+    sonar_version: 25.1.0.102122
     sonar_web_host: 127.0.0.1
     sonar_plugins:
       - name: "sonar-l10n-pt"
