@@ -75,7 +75,7 @@
     service_list:
       - name: sonar
         description: "SonarQube"
-        start_command: "{{ sonar_daemon_dir }}/sonar.sh"
+        start_command: "{{ sonar_daemon_dir }}/sonar.sh console"
         working_directory: "{{ sonar_daemon_dir }}"
         user_name: "{{ sonar_user }}"
         group_name: "{{ sonar_group }}"
