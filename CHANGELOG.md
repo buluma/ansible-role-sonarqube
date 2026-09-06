@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased](https://github.com/buluma/ansible-role-sonarqube/tree/HEAD)
+
+[Full Changelog](https://github.com/buluma/ansible-role-sonarqube/compare/26.6.1...HEAD)
+
+**Merged pull requests:**
+
+- fix: drop obsolete CMS GC flags from search javaOpts default [\#13](https://github.com/buluma/ansible-role-sonarqube/pull/13) ([buluma](https://github.com/buluma))
+
 ## [26.6.1](https://github.com/buluma/ansible-role-sonarqube/tree/26.6.1) (2026-07-26)
 
 [Full Changelog](https://github.com/buluma/ansible-role-sonarqube/compare/26.6.0...26.6.1)
