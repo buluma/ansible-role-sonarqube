@@ -36,11 +36,10 @@
   roles:
     - role: buluma.bootstrap
     - role: buluma.epel
+    # No java_version pin: SonarQube 25.1 crashed on Java 21.0.11+
+    # (setSecurityManager removal), which forced a Java 17 pin here --
+    # but java-17-openjdk is gone from Debian 13, EL10 and Fedora 43/44
+    # repos. Bumped sonar_version (defaults/main.yml) to 26.1.0.118079
+    # instead, which supports Java 21/25, so buluma.java's own
+    # per-distro default now works everywhere.
     - role: buluma.java
-      # Pinned to 17: SonarQube 25.1 calls the now-removed
-      # java.lang.System.setSecurityManager at startup. Recent Java 21
-      # patch releases (21.0.11+) finalized its removal and throw
-      # UnsupportedOperationException, crashing the web server process
-      # right after Elasticsearch comes up. Java 17 doesn't enforce this.
-      vars:
-        java_version: "17"
