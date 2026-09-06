@@ -37,14 +37,15 @@
     - role: buluma.bootstrap
     - role: buluma.epel
     - role: buluma.java
-      # Pinned to 21: SonarQube 25.1 crashed on Java 21.0.11+
+      # Pinned to 25, not 21: SonarQube 25.1 crashed on Java 21.0.11+
       # (setSecurityManager removal), which forced a Java 17 pin here --
       # but java-17-openjdk is gone from Debian 13, EL10 and Fedora
       # 43/44 repos. Bumped sonar_version (defaults/main.yml) to
       # 26.1.0.118079 to fix that, but 2026.1 LTA in turn dropped
-      # support for Java 17 entirely, and buluma.java's per-distro
-      # default is still 17 on Debian-12/RedHat/Ubuntu -- so an
-      # explicit floor is needed either way. 21 is the one version
-      # every tested platform can install and 26.1.0.118079 supports.
+      # Java 17 support entirely, and Fedora 44 already dropped
+      # java-21-openjdk in favor of 25 -- 25 is confirmed available on
+      # every platform in this matrix except Debian 12 (see comment on
+      # that matrix entry below) and is one of the two versions
+      # 26.1.0.118079 documents support for (21 or 25).
       vars:
-        java_version: "21"
+        java_version: "25"
