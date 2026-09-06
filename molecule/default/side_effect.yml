@@ -8,4 +8,4 @@
   tasks:
     - name: "Start role again and apply upgrade to {{ sonar_version }}"
       ansible.builtin.include_role:
-        name: ansible-role-sonarqube
+        name: buluma.sonarqube
