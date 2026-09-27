@@ -43,6 +43,15 @@
       when: '"sonar.service" in ansible_facts["services"]'
       notify: Warn about post-upgrade steps
 
+    - name: setup_sonarqube | Ensure SonarQube files permissions
+      ansible.builtin.file:
+        path: "{{ sonar_install_directory }}"
+        state: directory
+        recurse: true
+        owner: "{{ sonar_user }}"
+        group: "{{ sonar_group }}"
+        mode: "o-w"
+
 - name: setup_sonarqube | Ensure SonarQube as init script for service management
   ansible.builtin.file:
     src: "{{ sonar_daemon_dir }}/sonar.sh"
@@ -93,15 +102,6 @@
     name: sonar
     state: started
     enabled: true
-
-- name: setup_sonarqube | Ensure SonarQube files permissions
-  ansible.builtin.file:
-    path: "{{ sonar_install_directory }}"
-    state: directory
-    recurse: true
-    owner: "{{ sonar_user }}"
-    group: "{{ sonar_group }}"
-    mode: "o-w"
 
 - name: setup_sonarqube | Ensure SonarQube configuration
   ansible.builtin.template:
