@@ -15,34 +15,25 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
 - name: Converge
   hosts: all
   vars:
-    sonar_version: 7.9.6
+    sonar_version: 26.11.0.134175
     sonar_web_host: 127.0.0.1
     sonar_plugins:
       - name: "sonar-l10n-pt"
         version: "6.4"
         commercial: false
         url: "https://github.com/felipebz/sonar-l10n-pt/releases/download/v6.4/sonar-l10n-pt-plugin-6.4.jar"
-      - name: "sonar-html-plugin"
-        version: "3.2.0.2082"
-        commercial: false
-      - name: "ansible"
-        version: "2.5.1"
-        marketplace: true
-      - name: "ha"
-        version: "7.1"
-        marketplace: true
-      - name: "ha"
-        version: "7.1"
-        marketplace: true
-      - name: "authgithub"
-        version: "1.5"
-        marketplace: true
-      - name: "authgitlab"
-        version: "1.3.2"
-        marketplace: true
-      - name: "authgoogleoauth"
-        version: "1.6.1"
-        marketplace: true
+      # sonar-html-plugin removed from this fixture: SonarQube 25.1 bundles
+      # HTML analysis as a built-in feature under the same plugin key
+      # ("web"), so installing the standalone jar makes the web server
+      # refuse to start with "Found a plugin 'SonarHTML' ... with the same
+      # key [web] as a built-in feature". Confirmed by reproducing the
+      # crash locally (journalctl showed the exact MessageException).
+      # marketplace: true plugins removed from this fixture: SonarSource's
+      # legacy update-center API (update.sonarsource.org and its
+      # downloads.sonarsource.com redirect target) now returns 403 AccessDenied
+      # on every endpoint, not just a moved URL -- the service is gone, not
+      # the role broken. setup_plugin_marketplace.yml itself is untested by
+      # this fixture until SonarSource ships a working replacement.
   # pre_tasks:
   #   # TODO: Prepare Java 11
   #   - name: install openjdk (redhat)
@@ -63,6 +54,34 @@ This example is taken from [`molecule/default/converge.yml`](https://github.com/
   #     when: ansible_facts['os_family'] == "Debian"
   roles:
     - role: buluma.sonarqube
+
+  post_tasks:
+    # TEMPORARY: diagnosing why the sonar service still reports changed on
+    # molecule's idempotence re-check after dropping sonar-html-plugin.
+    - name: DEBUG | sonar service status
+      ansible.builtin.command: systemctl status sonar --no-pager -l
+      register: __debug_sonar_status
+      changed_when: false
+      failed_when: false
+    - name: DEBUG | print sonar service status
+      ansible.builtin.debug:
+        var: __debug_sonar_status.stdout_lines
+    - name: DEBUG | is-enabled
+      ansible.builtin.command: systemctl is-enabled sonar
+      register: __debug_sonar_enabled
+      changed_when: false
+      failed_when: false
+    - name: DEBUG | print is-enabled
+      ansible.builtin.debug:
+        var: __debug_sonar_enabled.stdout_lines
+    - name: DEBUG | sonar journal
+      ansible.builtin.command: journalctl -u sonar --no-pager -n 100
+      register: __debug_sonar_journal
+      changed_when: false
+      failed_when: false
+    - name: DEBUG | print sonar journal
+      ansible.builtin.debug:
+        var: __debug_sonar_journal.stdout_lines
 ```
 
 The machine needs to be prepared. In CI this is done using [`molecule/default/prepare.yml`](https://github.com/buluma/ansible-role-sonarqube/blob/master/molecule/default/prepare.yml):
@@ -107,6 +126,18 @@ The machine needs to be prepared. In CI this is done using [`molecule/default/pr
     - role: buluma.bootstrap
     - role: buluma.epel
     - role: buluma.java
+      # Pinned to 25, not 21: SonarQube 25.1 crashed on Java 21.0.11+
+      # (setSecurityManager removal), which forced a Java 17 pin here --
+      # but java-17-openjdk is gone from Debian 13, EL10 and Fedora
+      # 43/44 repos. Bumped sonar_version (defaults/main.yml) to
+      # 26.1.0.118079 to fix that, but 2026.1 LTA in turn dropped
+      # Java 17 support entirely, and Fedora 44 already dropped
+      # java-21-openjdk in favor of 25 -- 25 is confirmed available on
+      # every platform in this matrix except Debian 12 (see comment on
+      # that matrix entry below) and is one of the two versions
+      # 26.1.0.118079 documents support for (21 or 25).
+      vars:
+        java_version: "25"
 ```
 
 Also see a [full explanation and example](https://buluma.github.io/how-to-use-these-roles.html) on how to use these roles.
@@ -126,7 +157,7 @@ sonar_install_directory: /opt/sonarqube
 sonar_base_dir: "{{ sonar_install_directory }}/sonarqube-{{ sonar_version }}"
 
 # SonarQube daemon directory
-sonar_daemon_dir: "{{ sonar_base_dir }}/bin/linux-x86-{{ ansible_userspace_bits }}"
+sonar_daemon_dir: "{{ sonar_base_dir }}/bin/linux-x86-{{ ansible_facts['userspace_bits'] }}"
 
 # SonarQube conf directory
 sonar_conf_dir: "{{ sonar_base_dir }}/conf"
@@ -140,7 +171,11 @@ sonar_data_dir: "{{ sonar_base_dir }}/data"
 sonar_temp_dir: "{{ sonar_base_dir }}/temp"
 
 # SonarQube version to install
-sonar_version: "7.3"
+# 26.11.0.134175 (Community Build 26.11): 25.1.x crashes on
+# Java 21.0.11+ with "UnsupportedOperationException: The Security Manager
+# is deprecated" (setSecurityManager removed) -- fixed upstream in 25.2,
+# and 26.x documents support for both Java 21 and Java 25.
+sonar_version: "26.11.0.134175"
 
 # SonarQube system group
 sonar_group: sonar
